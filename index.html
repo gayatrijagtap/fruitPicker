@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page Title</title>
+    <script>
+      const startGame = function(i, marVal) {
+        inter = setInterval(function() {
+          document.getElementById(i).style.marginLeft = marVal + "px";
+          document.getElementById(i).style.top =
+            +document.getElementById(i).style.top.replace("px", "") + 10 + "px";
+
+          if (+document.getElementById(i).style.top.replace("px", "") > 400) {
+            clearInterval(inter);
+            document.getElementById(i).style.top = -160 + "px";
+          }
+        }, 50);
+      };
+    </script>
+  </head>
+  <body
+    onkeypress="
+  if(event.key == 'j') {
+    if(+document.getElementById('bowl').style.marginLeft.replace('px','') >=-20) {
+      document.getElementById('bowl').style.marginLeft = +document.getElementById('bowl').style.marginLeft.replace('px','') - 10 + 'px';
+    }
+  }
+  if(event.key == 'k') {
+    if(+document.getElementById('bowl').style.marginLeft.replace('px','') <=1140) {
+    document.getElementById('bowl').style.marginLeft = +document.getElementById('bowl').style.marginLeft.replace('px','') + 10 + 'px';
+    }
+  }
+  if(event.key == ' ') {
+    i = 2;
+    setInterval(function() {
+      marVal = Math.floor(Math.random()*(1300-1)+1);
+    startGame(i,marVal);
+    i += 1;
+    if(i>4) {
+      i = 1;
+    }
+    },2000);
+  }
+  "
+  >
+    <img
+      src="bowl.png"
+      id="bowl"
+      style="top:400px;position: absolute; margin-left: 550px"
+      width="400px"
+      height="300px"
+    />
+    <img
+      src="apple.png"
+      id="1"
+      style="top:-160px;position: absolute; margin-left: 550px"
+      width="150px"
+      height="160px"
+    />
+    <img
+      src="mango.png"
+      id="2"
+      style="top:-160px;position: absolute; margin-left: 550px"
+      width="150px"
+      height="160px"
+    />
+    <img
+      src="strawberry.png"
+      id="3"
+      style="top:-160px;position: absolute; margin-left: 550px"
+      width="150px"
+      height="160px"
+    />
+    <img
+      src="bug.png"
+      id="4"
+      style="top:-160px;position: absolute; margin-left: 550px"
+      width="150px"
+      height="160px"
+    />
+  </body>
+</html>
