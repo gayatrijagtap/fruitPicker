@@ -9,26 +9,31 @@ autosave
 
 let lives = 3;
 
+const getDimension = function(element, attribute) {
+  return +element.style[attribute].replace("px", "");
+};
+
 const getElement = function(id) {
   return document.getElementById(id);
 };
 
 const startGame = function(fruit, fruitMargin) {
+  let timer = 30;
   let interval = setInterval(function() {
     let liveDetails = document.getElementById("live");
     let bowlDetails = document.getElementById("bowl");
     let fruitDetails = document.getElementById(fruit);
-
     moveFruit(fruitDetails, fruitMargin);
     pickFruit(fruit, fruitDetails, interval, bowlDetails, liveDetails);
-    gameOver(fruit, fruitDetails, liveDetails, interval);
-  }, 30);
+    initializeMissedFruit(fruit, fruitDetails, liveDetails, interval);
+  }, timer);
 };
 
 const moveFruit = function(fruitDetails, fruitMargin) {
+  let topIncrement = 10;
+  let fruitTopValue = getDimension(fruitDetails, "top") + topIncrement + "px";
   fruitDetails.style.marginLeft = fruitMargin + "px";
-  fruitDetails.style.top =
-    +fruitDetails.style.top.replace("px", "") + 10 + "px";
+  fruitDetails.style.top = fruitTopValue;
 };
 
 const pickFruit = function(
@@ -38,67 +43,88 @@ const pickFruit = function(
   bowlDetails,
   liveDetails
 ) {
-  let fruitTop = +fruitDetails.style.top.replace("px", "");
-  let fruitLeft = +fruitDetails.style.marginLeft.replace("px", "");
-  let bowlLeft = +bowlDetails.style.marginLeft.replace("px", "");
-
-  if (fruitTop > 400 && fruitLeft > bowlLeft && fruitLeft < bowlLeft + 300) {
-    fruitDetails.style.top = -160 + "px";
-    triggerBug(fruit, interval, liveDetails);
+  let fruitTop = getDimension(fruitDetails, "top");
+  let fruitLeft = getDimension(fruitDetails, "marginLeft");
+  let bowlLeft = getDimension(bowlDetails, "marginLeft");
+  let bowlTop = 400;
+  let bowlWidth = 300;
+  let fruitInitialTop = -160;
+  if (
+    fruitTop > bowlTop &&
+    fruitLeft > bowlLeft &&
+    fruitLeft < bowlLeft + bowlWidth
+  ) {
+    fruitDetails.style.top = fruitInitialTop + "px";
+    encounterBug(fruit, interval, liveDetails);
     clearInterval(interval);
   }
 };
 
-const triggerBug = function(fruit, interval, liveDetails) {
-  if (fruit == 4) {
+const encounterBug = function(fruit, interval, liveDetails) {
+  let bugId = 4;
+  if (fruit == bugId) {
     lives -= 1;
     liveDetails.innerText = lives;
-    if (lives <= 0) {
-      clearInterval(interval);
-      alert("Game Over!!");
-      document.location.reload();
-    }
+    gameOverAction(interval, lives);
   }
 };
 
-const gameOver = function(fruit, fruitDetails, liveDetails, interval) {
-  if (+fruitDetails.style.top.replace("px", "") > 750) {
-    fruitDetails.style.top = -160 + "px";
+const gameOverAction = function(interval, lives) {
+  if (lives <= 0) {
+    clearInterval(interval);
+    alert("Game Over!!");
+    document.location.reload();
+  }
+};
+
+const initializeMissedFruit = function(
+  fruit,
+  fruitDetails,
+  liveDetails,
+  interval
+) {
+  let bugId = 4;
+  let pageTop = 750;
+  let fruitInitialTop = -160;
+  if (getDimension(fruitDetails, "top") > pageTop) {
+    fruitDetails.style.top = fruitInitialTop + "px";
     lives -= 1;
     liveDetails.innerText = lives;
-    if (fruit == 4) {
+    if (fruit == bugId) {
       lives += 1;
       liveDetails.innerText = lives;
     }
-    if (lives <= 0) {
-      alert("Game Over!!");
-    }
+    gameOverAction(interval, lives);
     clearInterval(interval);
   }
 };
 
 const moveLeft = function(bowlStyle, bowlMarginLeft) {
-  if (bowlMarginLeft >= -20) {
+  let pageExtremeLeft = -20;
+  if (bowlMarginLeft >= pageExtremeLeft) {
     bowlStyle.marginLeft = bowlMarginLeft - 10 + "px";
   }
 };
 
 const moveRight = function(bowlStyle, bowlMarginLeft) {
-  if (bowlMarginLeft <= 1140) {
+  let pageExtremeRight = 1140;
+  if (bowlMarginLeft <= pageExtremeRight) {
     bowlStyle.marginLeft = bowlMarginLeft + 10 + "px";
   }
 };
 
 const startMovement = function() {
-  fruit = 1;
+  let timer = 3000;
+  let fruitId = 1;
+  numberOfFruits = 4;
   setInterval(function() {
-    bowlMargin = Math.floor(Math.random() * (1300 - 1) + 1);
-    startGame(fruit, bowlMargin);
-    fruit += 1;
-    if (fruit > 4) {
-      fruit = 1;
+    let bowlMargin = Math.floor(Math.random() * (1300 - 1) + 1);
+    startGame(fruitId, bowlMargin);
+    fruitId += 1;
+    if (fruitId > numberOfFruits) {
+      fruitId = 1;
     }
-  }, 3000);
+  }, timer);
 };
 
 const decideMovement = function(event) {
@@ -106,7 +132,7 @@ const decideMovement = function(event) {
   events["j"] = moveLeft;
   events["k"] = moveRight;
   events[" "] = startMovement;
-  let bowlStyle = getElement("bowl").style;
-  let bowlMarginLeft = +bowlStyle.marginLeft.replace("px", "");
-  events[event.key](bowlStyle, bowlMarginLeft);
+  let bowlDetails = getElement("bowl");
+  let bowlMarginLeft = getDimension(bowlDetails, "marginLeft");
+  events[event.key](bowlDetails.style, bowlMarginLeft);
 };
