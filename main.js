@@ -55,13 +55,13 @@ const pickFruit = function(
     fruitLeft < bowlLeft + bowlWidth
   ) {
     fruitDetails.style.top = fruitInitialTop + "px";
-    encounterBug(fruit, interval, liveDetails);
+    decrementOnPickingBug(fruit, interval, liveDetails);
     clearInterval(interval);
   }
 };
 
-const encounterBug = function(fruit, interval, liveDetails) {
-  let bugId = 4;
+const decrementOnPickingBug = function(fruit, interval, liveDetails) {
+  let bugId = "4";
   if (fruit == bugId) {
     lives -= 1;
     liveDetails.innerText = lives;
@@ -83,20 +83,25 @@ const initializeMissedFruit = function(
   liveDetails,
   interval
 ) {
-  let bugId = 4;
   let pageTop = 750;
+  let bugId = "4";
   let fruitInitialTop = -160;
   if (getDimension(fruitDetails, "top") > pageTop) {
     fruitDetails.style.top = fruitInitialTop + "px";
     lives -= 1;
+    lives = incrementOnMissingBug(fruit, lives);
     liveDetails.innerText = lives;
-    if (fruit == bugId) {
-      lives += 1;
-      liveDetails.innerText = lives;
-    }
     gameOverAction(interval, lives);
     clearInterval(interval);
   }
+};
+
+const incrementOnMissingBug = function(fruit, lives) {
+  let bugId = "4";
+  if (fruit == bugId) {
+    lives += 1;
+  }
+  return lives;
 };
 
 const moveLeft = function(bowlStyle, bowlMarginLeft) {
