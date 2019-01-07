@@ -2,20 +2,7 @@
 <html>
   <head>
     <title>Page Title</title>
-    <script>
-      const startGame = function(i, marVal) {
-        inter = setInterval(function() {
-          document.getElementById(i).style.marginLeft = marVal + "px";
-          document.getElementById(i).style.top =
-            +document.getElementById(i).style.top.replace("px", "") + 10 + "px";
-
-          if (+document.getElementById(i).style.top.replace("px", "") > 400) {
-            clearInterval(inter);
-            document.getElementById(i).style.top = -160 + "px";
-          }
-        }, 50);
-      };
-    </script>
+    <script src="main.js"></script>
   </head>
   <body
     onkeypress="
@@ -30,7 +17,7 @@
     }
   }
   if(event.key == ' ') {
-    i = 2;
+    i = 1;
     setInterval(function() {
       marVal = Math.floor(Math.random()*(1300-1)+1);
     startGame(i,marVal);
@@ -38,16 +25,17 @@
     if(i>4) {
       i = 1;
     }
-    },2000);
+    },3000);
   }
   "
   >
+    <button id="score">Score</button>
     <img
       src="bowl.png"
       id="bowl"
       style="top:400px;position: absolute; margin-left: 550px"
-      width="400px"
-      height="300px"
+      width="300px"
+      height="200px"
     />
     <img
       src="apple.png"
