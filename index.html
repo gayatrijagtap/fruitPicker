@@ -3,6 +3,13 @@
   <head>
     <title>Page Title</title>
     <script src="main.js"></script>
+    <style>
+      body {
+        background-image: url("./tree.jpg");
+        background-attachment: fixed;
+        background-size: cover;
+      }
+    </style>
   </head>
   <body
     onkeypress="
@@ -29,7 +36,7 @@
   }
   "
   >
-    <button id="score">Score</button>
+    <label>Lives:</label> <button id="live">3</button>
     <img
       src="bowl.png"
       id="bowl"

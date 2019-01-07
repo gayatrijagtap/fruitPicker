@@ -1,4 +1,4 @@
-let scr = 0;
+let lives = 3;
 const startGame = function(i, marVal) {
   inter = setInterval(function() {
     document.getElementById(i).style.marginLeft = marVal + "px";
@@ -14,17 +14,10 @@ const startGame = function(i, marVal) {
           300
     ) {
       document.getElementById(i).style.top = -160 + "px";
-      scr += 1;
-      document.getElementById("score").innerText = scr;
-      if (scr <= 0) {
-        clearInterval(inter);
-        alert("Game Over!!");
-        document.location.reload();
-      }
       if (i == 4) {
-        scr -= 2;
-        document.getElementById("score").innerText = scr;
-        if (scr <= 0) {
+        lives -= 1;
+        document.getElementById("live").innerText = lives;
+        if (lives <= 0) {
           clearInterval(inter);
           alert("Game Over!!");
           document.location.reload();
@@ -34,14 +27,15 @@ const startGame = function(i, marVal) {
     }
     if (+document.getElementById(i).style.top.replace("px", "") > 750) {
       document.getElementById(i).style.top = -160 + "px";
-      scr -= 1;
+      lives -= 1;
+      document.getElementById("live").innerText = lives;
       if (i == 4) {
-        scr += 1;
+        lives += 1;
+        document.getElementById("live").innerText = lives;
       }
-      if (scr <= 0) {
+      if (lives <= 0) {
         alert("Game Over!!");
       }
-      document.getElementById("score").innerText = scr;
       clearInterval(inter);
     }
   }, 30);
