@@ -11,31 +11,7 @@
       }
     </style>
   </head>
-  <body
-    onkeypress="
-  if(event.key == 'j') {
-    if(+document.getElementById('bowl').style.marginLeft.replace('px','') >=-20) {
-      document.getElementById('bowl').style.marginLeft = +document.getElementById('bowl').style.marginLeft.replace('px','') - 10 + 'px';
-    }
-  }
-  if(event.key == 'k') {
-    if(+document.getElementById('bowl').style.marginLeft.replace('px','') <=1140) {
-    document.getElementById('bowl').style.marginLeft = +document.getElementById('bowl').style.marginLeft.replace('px','') + 10 + 'px';
-    }
-  }
-  if(event.key == ' ') {
-    i = 1;
-    setInterval(function() {
-      marVal = Math.floor(Math.random()*(1300-1)+1);
-    startGame(i,marVal);
-    i += 1;
-    if(i>4) {
-      i = 1;
-    }
-    },3000);
-  }
-  "
-  >
+  <body onkeypress="decideMovement(event)">
     <label>Lives:</label> <button id="live">3</button>
     <img
       src="bowl.png"
