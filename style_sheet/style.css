@@ -1,0 +1,35 @@
+body {
+  background-image: url("/fruitPicker/images/tree.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+}
+.gameEnd {
+  margin-left: 500px;
+  top: 300px;
+  position: absolute;
+  font-size: 100px;
+  display: none;
+}
+
+.reload {
+  margin-left: 180px;
+  height: 50px;
+  width: 70px;
+  border-radius: 5px;
+}
+
+.bowl {
+  top: 400px;
+  position: absolute;
+  margin-left: 550px;
+  width: 300px;
+  height: 200px;
+}
+
+.fruit {
+  top: -160px;
+  position: absolute;
+  margin-left: 550px;
+  width: 150px;
+  height: 160px;
+}
