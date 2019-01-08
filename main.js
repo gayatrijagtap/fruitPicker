@@ -72,8 +72,8 @@ const decrementOnPickingBug = function(fruit, interval, liveDetails) {
 const gameOverAction = function(interval, lives) {
   if (lives <= 0) {
     clearInterval(interval);
-    alert("Game Over!!");
-    document.location.reload();
+    let gameEnd = getElement("gameOver");
+    gameEnd.style.display = "inline";
   }
 };
 
@@ -140,4 +140,8 @@ const decideMovement = function(event) {
   let bowlDetails = getElement("bowl");
   let bowlMarginLeft = getDimension(bowlDetails, "marginLeft");
   events[event.key](bowlDetails.style, bowlMarginLeft);
+};
+
+const reload = function() {
+  document.location.reload();
 };

@@ -9,7 +9,20 @@
         background-attachment: fixed;
         background-size: cover;
       }
-      
+      .gameEnd {
+        margin-left: 500px;
+        top: 300px;
+        position: absolute;
+        font-size: 100px;
+        display: none;
+      }
+
+      .reload {
+        margin-left: 180px;
+        height: 50px;
+        width: 70px;
+        border-radius: 5px;
+      }
     </style>
   </head>
   <body onkeypress="decideMovement(event)">
@@ -49,5 +62,8 @@
       width="150px"
       height="160px"
     />
+    <div id="gameOver" class="gameEnd">
+      game over<br /><button onclick="reload();" class="reload">replay</button>
+    </div>
   </body>
 </html>
