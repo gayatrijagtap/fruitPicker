@@ -49,15 +49,25 @@ const pickFruit = function(
   let bowlTop = 400;
   let bowlWidth = 300;
   let fruitInitialTop = -160;
-  if (
-    fruitTop > bowlTop &&
-    fruitLeft > bowlLeft &&
-    fruitLeft < bowlLeft + bowlWidth
-  ) {
+  if (isPickedFruit(fruitTop, bowlTop, fruitLeft, bowlLeft, bowlWidth)) {
     fruitDetails.style.top = fruitInitialTop + "px";
     decrementOnPickingBug(fruit, interval, liveDetails);
     clearInterval(interval);
   }
+};
+
+const isPickedFruit = function(
+  fruitTop,
+  bowlTop,
+  fruitLeft,
+  bowlLeft,
+  bowlWidth
+) {
+  return (
+    fruitTop > bowlTop &&
+    fruitLeft > bowlLeft &&
+    fruitLeft < bowlLeft + bowlWidth
+  );
 };
 
 const decrementOnPickingBug = function(fruit, interval, liveDetails) {
@@ -72,8 +82,7 @@ const decrementOnPickingBug = function(fruit, interval, liveDetails) {
 const gameOverAction = function(interval, lives) {
   if (lives <= 0) {
     clearInterval(interval);
-    let gameEnd = getElement("gameOver");
-    gameEnd.style.display = "inline";
+    getElement("gameOver").style.display = "inline";
   }
 };
 
@@ -84,7 +93,6 @@ const initializeMissedFruit = function(
   interval
 ) {
   let pageTop = 750;
-  let bugId = "4";
   let fruitInitialTop = -160;
   if (getDimension(fruitDetails, "top") > pageTop) {
     fruitDetails.style.top = fruitInitialTop + "px";
